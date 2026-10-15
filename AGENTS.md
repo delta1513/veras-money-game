@@ -88,7 +88,12 @@ The code keeps all money as whole cents (integers). Do not use dollar fractions 
 
 Add `?seed=<number>` to the URL to fix the amounts. The tests use it.
 
-The coins and notes are inline SVG in `components/Money.tsx`. Do not use photos of real money. The note colours follow the Reserve Bank notes: $5 pink, $10 blue, $20 red, $50 yellow, $100 green. The 50c coin has 12 sides. The $2 coin is smaller than the $1 coin.
+The coins and notes are the official images in `public/money/`. `components/Money.tsx` shows them. Vera must see money that looks exactly like real Australian money. Do not replace the images with drawings.
+
+- The notes come from the Reserve Bank of Australia. Each file must be less than three-quarters of the real note's length and width at 72 dpi. This is the RBA rule for electronic images. Do not make the note files larger. The maximum widths are: $5 275px, $10 290px, $20 305px, $50 320px, $100 334px.
+- The coins come from the Royal Australian Mint. Show them in a faithful likeness. Do not change, cut, or deface them.
+- The $2 coin is smaller than the $1 coin. The `scale` values in `lib/money.ts` keep the real size order.
+- Keep the credits in `README.md`.
 
 ## Project layout
 
@@ -99,7 +104,7 @@ The coins and notes are inline SVG in `components/Money.tsx`. Do not use photos 
   - `Till.tsx`: the cash drawer and the action button slot.
   - `Tray.tsx`: the tray and its piles of money.
   - `useTray.ts`: the tray state and the flight animations. `FlyLayer.tsx` draws the money that flies back to the till.
-  - `Money.tsx`: the coin and note drawings.
+  - `Money.tsx`: shows the coin and note images.
   - `SuccessOverlay.tsx`, `RoundComplete.tsx`, `Overlay.tsx`, `Confetti.tsx`: the result screens.
   - `icons.tsx`: the icons.
 - `lib/money.ts`: the denominations, the level settings, the amount picker, and the money format.

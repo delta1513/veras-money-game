@@ -44,7 +44,22 @@ no runtime API call. Cloudflare Workers builds and deploys it on every push to
 - Money is integer cents throughout.
 - `?seed=<number>` fixes the amounts; the tests use it.
 
-The coins and notes are drawn as inline SVG (`components/Money.tsx`) in the
-Reserve Bank note colours, with the 50c as a dodecagon and coins sized relative
-to each other as in real life. Animations are CSS and the Web Animations API,
-and are switched off under `prefers-reduced-motion`.
+The coins and notes use the official images (`public/money/`, shown by
+`components/Money.tsx`), with coins sized relative to each other as in real
+life. Animations are CSS and the Web Animations API, and are switched off under
+`prefers-reduced-motion`.
+
+## Money images
+
+- **Notes** (front of each current note, "SPECIMEN" overprint): © Reserve Bank
+  of Australia, from <https://banknotes.rba.gov.au/>. They are reproduced under
+  the RBA's [Reproducing Banknotes](https://www.banknotes.rba.gov.au/legal/reproducing-banknotes/)
+  guidelines for electronic images: at 100% each file is under three-quarters
+  of the real note's length and width at 72 dpi. Keep it that way: the widest
+  allowed is $5 275px, $10 290px, $20 305px, $50 320px, $100 334px.
+- **Coins**: © Commonwealth of Australia, Royal Australian Mint, from
+  <https://www.ramint.gov.au/circulating-coins>. Shown in faithful likeness on
+  an educational site, which the Mint's
+  [Copyright and Re-use of Materials Policy](https://ramint.gov.au/copyright-and-re-use-materials-policy)
+  permits without application. The white backgrounds were removed; the coins
+  are otherwise unchanged.

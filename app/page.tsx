@@ -4,7 +4,6 @@ import { useState } from "react";
 import FreePlay from "@/components/FreePlay";
 import Game from "@/components/Game";
 import Landing from "@/components/Landing";
-import { MoneyDefs } from "@/components/Money";
 import type { Mode } from "@/lib/types";
 
 export default function Home() {
@@ -13,8 +12,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Gradients shared by every coin and note on every screen. */}
-      <MoneyDefs />
       {mode === null && <Landing onStart={setMode} />}
       {/* Keying on the level resets all game state when a new round starts. */}
       {mode?.kind === "level" && (
