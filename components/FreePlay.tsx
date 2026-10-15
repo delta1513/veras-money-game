@@ -19,14 +19,14 @@ export default function FreePlay({ onHome }: { onHome: () => void }) {
   return (
     <main
       data-testid="free-play"
-      className="mx-auto flex h-dvh w-full max-w-md flex-col gap-2 overflow-hidden px-3 pt-2 pb-3 roomy:max-w-2xl roomy:gap-4 roomy:px-6 roomy:py-5 spacious:max-w-6xl"
+      className="mx-auto flex h-dvh w-full max-w-md flex-col gap-2 overflow-hidden px-3 pt-2 pb-3 roomy:max-w-2xl roomy:gap-4 roomy:px-6 roomy:py-5 landscape:max-w-6xl!"
     >
       <header className="flex shrink-0 items-center justify-between gap-2">
         <HomeButton onHome={onHome} />
         <CartIcon className="h-11 w-11 opacity-80 roomy:h-14 roomy:w-14" />
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4 spacious:flex-row spacious:gap-6">
+      <div className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4 landscape:flex-row landscape:gap-6">
         <section className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4">
           <div className="flex shrink-0 items-center justify-center rounded-3xl bg-white px-4 py-1 shadow-sm roomy:py-3">
             <span
@@ -45,7 +45,8 @@ export default function FreePlay({ onHome }: { onHome: () => void }) {
           />
         </section>
 
-        <div className="shrink-0 spacious:flex spacious:w-[46%] spacious:flex-col spacious:justify-end">
+        {/* In landscape the till is a left column, as tall as the screen allows. */}
+        <div className="shrink-0 landscape:order-first landscape:flex landscape:w-1/2 landscape:max-w-[calc((100dvh-7rem)*1.6)] landscape:flex-col landscape:justify-end">
           <Till
             onPress={tray.add}
             action={

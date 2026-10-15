@@ -94,7 +94,7 @@ export default function Game({
   }, [level, reset]);
 
   return (
-    <main className="mx-auto flex h-dvh w-full max-w-md flex-col gap-2 overflow-hidden px-3 pt-2 pb-3 roomy:max-w-2xl roomy:gap-4 roomy:px-6 roomy:py-5 spacious:max-w-6xl">
+    <main className="mx-auto flex h-dvh w-full max-w-md flex-col gap-2 overflow-hidden px-3 pt-2 pb-3 roomy:max-w-2xl roomy:gap-4 roomy:px-6 roomy:py-5 landscape:max-w-6xl!">
       <header className="flex shrink-0 items-center justify-between gap-2">
         <HomeButton onHome={onHome} />
         <div
@@ -119,7 +119,7 @@ export default function Game({
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4 spacious:flex-row spacious:gap-6">
+      <div className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4 landscape:flex-row landscape:gap-6">
         <section className="flex min-h-0 flex-1 flex-col gap-2 roomy:gap-4">
           {/* The bill: what the customer has to be given. */}
           <div
@@ -161,7 +161,8 @@ export default function Game({
           />
         </section>
 
-        <div className="shrink-0 spacious:flex spacious:w-[46%] spacious:flex-col spacious:justify-end">
+        {/* In landscape the till is a left column, as tall as the screen allows. */}
+        <div className="shrink-0 landscape:order-first landscape:flex landscape:w-1/2 landscape:max-w-[calc((100dvh-7rem)*1.6)] landscape:flex-col landscape:justify-end">
           <Till
             onPress={tray.add}
             disabled={busy}

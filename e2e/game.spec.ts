@@ -258,3 +258,80 @@ test("home returns to the landing screen from a round and from free play", async
   await page.getByTestId("btn-home").click();
   await expect(page.getByTestId("landing")).toBeVisible();
 });
+
+/**
+ * Vera also plays on an iPad, turned either way. In landscape the browser bars
+ * leave well under 768px of height, which once squashed the tray to a sliver.
+ */
+const IPAD_SCREENS = [
+  { name: "iPad landscape", viewport: { width: 1180, height: 690 } },
+  { name: "iPad portrait", viewport: { width: 820, height: 1100 } },
+];
+
+for (const screen of IPAD_SCREENS) {
+  test.describe(screen.name, () => {
+    test.use({ viewport: screen.viewport });
+
+    async function expectNoScroll(page: Page) {
+      const overflow = await page.evaluate(() => ({
+        x: document.documentElement.scrollWidth - window.innerWidth,
+        y: document.documentElement.scrollHeight - window.innerHeight,
+      }));
+      expect(overflow).toEqual({ x: 0, y: 0 });
+    }
+
+    async function expectInside(page: Page, ids: string[]) {
+      const { width, height } = screen.viewport;
+      for (const id of ids) {
+        const box = (await page.getByTestId(id).boundingBox())!;
+        expect(box.x, id).toBeGreaterThanOrEqual(0);
+        expect(box.y, id).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width, id).toBeLessThanOrEqual(width);
+        expect(box.y + box.height, id).toBeLessThanOrEqual(height);
+      }
+    }
+
+    async function expectBottomLeft(page: Page, id: string) {
+      const { width, height } = screen.viewport;
+      const box = (await page.getByTestId(id).boundingBox())!;
+      expect(box.x + box.width / 2, id).toBeLessThan(width / 2);
+      expect(box.y + box.height / 2, id).toBeGreaterThan(height * 0.7);
+    }
+
+    test("the landing buttons fit without scrolling", async ({ page }) => {
+      await page.goto("/?seed=1");
+      await expectInside(page, ["level-1", "level-2", "level-3", "btn-freeplay"]);
+      await expectNoScroll(page);
+    });
+
+    test("the till, a roomy tray and the pay button all fit", async ({ page }) => {
+      await start(page, 1);
+      await expectInside(page, [
+        ...LARGEST_FIRST.map((cents) => `till-${cents}`),
+        "btn-pay",
+        "btn-home",
+        "target",
+        "tray",
+        "tray-total",
+      ]);
+      await expectBottomLeft(page, "btn-pay");
+      const tray = (await page.getByTestId("tray").boundingBox())!;
+      expect(tray.height).toBeGreaterThan(screen.viewport.height * 0.35);
+      await expectNoScroll(page);
+      await payCorrectly(page);
+    });
+
+    test("free play fits, with the bin bottom-left", async ({ page }) => {
+      await page.goto("/?seed=1");
+      await page.getByTestId("btn-freeplay").click();
+      await expectInside(page, [
+        ...LARGEST_FIRST.map((cents) => `till-${cents}`),
+        "btn-clear",
+        "tray",
+        "tray-total",
+      ]);
+      await expectBottomLeft(page, "btn-clear");
+      await expectNoScroll(page);
+    });
+  });
+}

@@ -5,11 +5,14 @@
  * matter: a phone held in landscape is wide but very short and must keep the
  * small layout. Only a screen with real vertical room gets the larger pieces.
  *
- *   roomy    — iPad portrait (768 x 1024) and up
- *   spacious — iPad landscape (1024 x 768) and up: tray and till side by side
+ *   roomy     — iPad portrait (768 x 1024) and iPad landscape: larger pieces
+ *   landscape — any screen held sideways (phone or iPad): till and tray side
+ *               by side, till on the left so the tick stays under the left
+ *               thumb. It keys on orientation, not height, because browser
+ *               bars leave an iPad in landscape well under 768px tall.
  */
 @custom-variant roomy (@media (min-width: 700px) and (min-height: 600px));
-@custom-variant spacious (@media (min-width: 1000px) and (min-height: 700px));
+@custom-variant landscape (@media (orientation: landscape) and (min-width: 640px));
 
 @theme {
   --color-mint: #eef7ec;

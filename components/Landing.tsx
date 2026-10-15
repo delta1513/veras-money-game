@@ -62,8 +62,8 @@ function HeroArt() {
     { cents: 20, className: "left-[72%] top-[52%] h-14 w-14" },
   ];
   return (
-    <div className="flex min-h-0 flex-1 items-center justify-center">
-      <div className="relative h-36 w-72 shrink-0 scale-110 roomy:h-48 roomy:w-96 roomy:scale-150">
+    <div className="flex min-h-0 flex-1 items-center justify-center landscape:col-start-2 landscape:row-start-2">
+      <div className="relative h-36 w-72 shrink-0 scale-110 roomy:h-48 roomy:w-96 roomy:scale-150 landscape:roomy:scale-125">
       {pieces.map((piece) => (
         <span
           key={piece.cents}
@@ -85,16 +85,17 @@ export default function Landing({
   return (
     <main
       data-testid="landing"
-      className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center gap-3 px-4 py-5 roomy:max-w-2xl roomy:gap-6 roomy:py-10"
+      className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center gap-3 px-4 py-5 roomy:max-w-2xl roomy:gap-6 roomy:py-10 landscape:grid landscape:h-dvh landscape:max-w-6xl! landscape:grid-cols-2 landscape:grid-rows-[auto_1fr] landscape:gap-x-8 landscape:py-4! roomy:landscape:py-6!"
     >
-      <h1 className="text-center text-4xl font-black tracking-tight roomy:text-6xl">
+      <h1 className="text-center text-4xl font-black tracking-tight roomy:text-6xl landscape:col-start-2 landscape:row-start-1">
         Vera&apos;s Money
       </h1>
 
       <HeroArt />
 
-      {/* Buttons sit at the bottom, under the left thumb. */}
-      <div className="flex w-full flex-col gap-3 roomy:gap-5">
+      {/* Buttons sit at the bottom, under the left thumb. In landscape they
+          fill the left column and share its height. */}
+      <div className="flex w-full flex-col gap-3 roomy:gap-5 landscape:col-start-1 landscape:row-span-2 landscape:row-start-1 landscape:h-full landscape:min-h-0">
         {LEVEL_ORDER.map((level) => (
           <button
             key={level}
@@ -102,7 +103,7 @@ export default function Landing({
             onClick={() => onStart({ kind: "level", level })}
             data-testid={`level-${level}`}
             aria-label={`level ${level}`}
-            className={`flex min-h-24 items-center justify-between rounded-3xl border-b-8 px-5 shadow-md active:translate-y-1 active:border-b-4 roomy:min-h-32 roomy:px-10 ${LEVEL_STYLES[level]}`}
+            className={`flex min-h-24 items-center justify-between rounded-3xl border-b-8 px-5 shadow-md active:translate-y-1 active:border-b-4 roomy:min-h-32 landscape:min-h-0! landscape:flex-1 roomy:px-10 ${LEVEL_STYLES[level]}`}
           >
             <span className="flex gap-1">
               {Array.from({ length: level }, (_, i) => (
@@ -118,7 +119,7 @@ export default function Landing({
           onClick={() => onStart({ kind: "free" })}
           data-testid="btn-freeplay"
           aria-label="free play"
-          className="flex min-h-24 items-center justify-center gap-4 rounded-3xl border-b-8 border-[#2b7bbf] bg-[#4dabf7] px-5 shadow-md active:translate-y-1 active:border-b-4 roomy:min-h-32"
+          className="flex min-h-24 items-center justify-center gap-4 rounded-3xl border-b-8 border-[#2b7bbf] bg-[#4dabf7] px-5 shadow-md active:translate-y-1 active:border-b-4 roomy:min-h-32 landscape:min-h-0! landscape:flex-1"
         >
           <CartIcon className="h-16 w-16 roomy:h-24 roomy:w-24" />
         </button>

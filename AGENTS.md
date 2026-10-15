@@ -84,6 +84,13 @@ The till always has the same layout. Do not move the pieces:
 
 The tick (or the bin) is at the bottom left, because Vera uses her left thumb. The home button is at the top left on every screen.
 
+Vera plays on a phone and on an iPad, in portrait and in landscape. The `landscape` variant in `app/globals.css` uses the screen orientation, not the height, because the browser bars make an iPad in landscape less than 700px tall.
+
+- In portrait, the amount and the tray are at the top, and the till is at the bottom.
+- In landscape, the till is a column on the left, at the bottom. The amount and the tray are a column on the right. The tick stays at the bottom left.
+- On the landing screen in landscape, the four buttons fill the left column. The title and the money picture are on the right.
+- The tests in `e2e/game.spec.ts` check an iPad in both orientations. Keep them.
+
 The code keeps all money as whole cents (integers). Do not use dollar fractions in calculations.
 
 Add `?seed=<number>` to the URL to fix the amounts. The tests use it.
