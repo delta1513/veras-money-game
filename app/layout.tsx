@@ -1,9 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NextJS + Cloudflare Workers template",
-  description: "A template for deploying static NextJS sites to Cloudflare Workers.",
+  title: "Vera's Money",
+  description: "A picture-led money game: give the right change from the till.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#35b14a",
 };
 
 export default function RootLayout({
@@ -13,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-h-dvh">{children}</body>
     </html>
   );
 }
