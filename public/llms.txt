@@ -1,20 +1,13 @@
-# NextJS + Cloudflare Workers template
+# Vera's Money
 
-> A minimal template for building static NextJS sites (App Router, TypeScript, `output: "export"`) that are deployed automatically by Cloudflare Workers on every push to `main`.
+> A picture-led money game for one player: an amount is shown, and the player taps Australian coins and notes from a till into a tray until it holds exactly that amount.
 
-This site is built from a template meant to be used by AI agents. It has no server, database, or secrets: the build produces plain HTML, CSS, and JavaScript that a Cloudflare Worker serves as static assets. Apps that need server code, a database, or third-party services are not supported by this template.
+The site is built for Vera, a stroke survivor who uses one hand (her left) and cannot read sentences. The interface has no instructions or labels: every control is a picture, an icon, or a colour, and the only text is dollar amounts. It has three levels ($1-$10 in 5c steps, $10-$100, and $100-$1000 in $5 steps) and a free play mode with a large running total. It is a static Next.js site with no server, no accounts, and no data collection.
 
 ## Docs
 
-- [AGENTS.md](https://raw.githubusercontent.com/delta1513/agentic-cloudflare-static-site-template/main/AGENTS.md): Instructions for agents - stack, commands, what the static export can and cannot do, pre-push checks, and Cloudflare setup
-- [Home page](/): Overview of the template, its rationale, limitations, and setup steps
+- [Home page](/): The game itself: level choice, the till, the tray, and free play
 
 ## Source
 
-- [GitHub repository](https://github.com/delta1513/agentic-cloudflare-static-site-template): Source code for the template
-- [wrangler.jsonc](https://raw.githubusercontent.com/delta1513/agentic-cloudflare-static-site-template/main/wrangler.jsonc): Cloudflare Worker config (name, build command, asset directory)
-- [next.config.ts](https://raw.githubusercontent.com/delta1513/agentic-cloudflare-static-site-template/main/next.config.ts): Next.js config that enables the static export
-
-## Optional
-
-- [Cloudflare Workers static assets docs](https://developers.cloudflare.com/workers/static-assets/index.md): Background on how the site is served
+- [AGENTS.md](https://github.com/delta1513/veras-money-game/blob/main/AGENTS.md): Who the game is for, the design rules, how the game works, and how to build and deploy it

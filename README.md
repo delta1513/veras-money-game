@@ -1,28 +1,50 @@
-# [Click me for the demo](https://agentic-cloudflare-static-site-template.deltadelta.workers.dev/)
+# Vera's Money
 
-# What is this?
+A picture-led money game. The screen shows an amount on a receipt; the player
+is the cashier and taps Australian coins and notes out of a till into a tray
+until the tray holds exactly that amount, then presses the big green tick.
 
-This repo is a template that you can give to an AI agent so that you can quickly deploy static websites using a NextJS and Cloudflare Worker stack.
+It is built for one player, Vera, who uses only her left hand and cannot read
+sentences. There is no text to read in the UI beyond the numbers: every control
+is a picture, an icon or a colour, touch targets are large, and the pay button
+sits bottom-left under the left thumb. See `AGENTS.md` for the full rules.
 
-Your agent should be able to clone this repo, or use it to instantiate a new Github project for you, then guide you on how to get it deployed using Cloudflare.
+## Running it
 
-# Rationale
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # static export into out/
+npm run lint
+npm run test:e2e   # builds, serves out/ on :3100, runs the Playwright suite
+```
 
-This project is a spin-off from an internal project I built at the last company I was working at. We needed a super simple and cheap way for non-engineering staff to be able to experiment and deploy vibe-coded applications safely, and with minimal overhead to the engineering team.
+`npm run build` produces a fully static site in `out/`. There is no server and
+no runtime API call. Cloudflare Workers builds and deploys it on every push to
+`main` (Worker name: `veras-money-game`).
 
-As a devops engineer, all I need to do is:
-1. Give this template to the vibe-coder
-2. Create a Cloudflare application for this repo and hook it up to a domain/Cloudflare Access
+## How the game works
 
-# Limitations
+| Level | Landing button | Amounts |
+| --- | --- | --- |
+| 1 | green, one $1 coin, ★ | $1.00 – $10.00 in 5c steps |
+| 2 | yellow, one $10 note, ★★ | $10 – $100, whole dollars |
+| 3 | orange, a stack of $100 notes, ★★★ | $100 – $1000 in $5 steps |
 
-This repo is meant to be an exceptionally lean implementation of this type of workflow, so the only sites you can deploy here must be static. For example, with the NextJS directive `output: "export"`.
+- A round is five amounts; five stars at the top show progress, and a trophy
+  ends the round with replay and home buttons.
+- Tapping a coin or note flies it into the tray, where pieces pile up by value
+  and the running total shows on the tray's lip. Tapping a piece in the tray
+  sends it back.
+- The tick is always enabled. Right amount: confetti, a happy face, next
+  amount. Wrong amount: the tray shakes, a sad face shows, and everything flies
+  back to the till. No lives, no fail state — just try again.
+- Free play (the trolley button) has the same till with no target: a giant
+  total for screenshotting, a red bin to empty the tray.
+- Money is integer cents throughout.
+- `?seed=<number>` fixes the amounts; the tests use it.
 
-# How to use
-
-> You can send this repo to your agent. If necessary, just point it to the AGENTS.md file.
-
-1. Set up the connection between Github and Cloudflare. This can be done by going to the Cloudflare Web console > Workers > Create application > Github. Then follow the prompts.
-2. Create a new Github repo by using this as a template.
-3. Go to the Cloudflare Web console > Workers > Create application > Github, and then pick your new repo.
-4. Follow the prompts, then enable the workers domain and your application will be live at `.workers.dev`!
+The coins and notes are drawn as inline SVG (`components/Money.tsx`) in the
+Reserve Bank note colours, with the 50c as a dodecagon and coins sized relative
+to each other as in real life. Animations are CSS and the Web Animations API,
+and are switched off under `prefers-reduced-motion`.
