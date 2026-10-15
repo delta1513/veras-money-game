@@ -1,39 +1,159 @@
-:root {
-  color-scheme: light dark;
+@import "tailwindcss";
+
+/*
+ * Size steps for bigger screens, the same as the spelling bee. Both conditions
+ * matter: a phone held in landscape is wide but very short and must keep the
+ * small layout. Only a screen with real vertical room gets the larger pieces.
+ *
+ *   roomy    — iPad portrait (768 x 1024) and up
+ *   spacious — iPad landscape (1024 x 768) and up: tray and till side by side
+ */
+@custom-variant roomy (@media (min-width: 700px) and (min-height: 600px));
+@custom-variant spacious (@media (min-width: 1000px) and (min-height: 700px));
+
+@theme {
+  --color-mint: #eef7ec;
+  --color-ink: #1f2a24;
+  --color-go: #35b14a;
+  --color-stop: #d64545;
+  --color-honey: #ffc83d;
+  --color-honey-deep: #f2a20c;
+  --font-sans: ui-rounded, "Nunito", "Segoe UI Rounded", system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  line-height: 1.6;
+  background: var(--color-mint);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Single-handed use: never let a mistaken swipe scroll or zoom the board. */
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-main {
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 2rem 1rem 4rem;
+button {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-h2 {
-  margin-top: 2.5rem;
+/* Every coin and note casts a soft shadow, so it reads as a thing to pick up. */
+.money-shadow {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.28));
 }
 
-blockquote {
-  margin: 1rem 0;
-  padding: 0.25rem 1rem;
-  border-left: 4px solid currentColor;
-  opacity: 0.8;
+/* The counter: a warm wooden tray with a raised rim. */
+.tray {
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(255, 255, 255, 0.35), transparent 65%),
+    linear-gradient(160deg, #f1d9a6, #ddb87a);
+  border: 5px solid #b98a4b;
+  box-shadow:
+    inset 0 4px 10px rgba(90, 55, 15, 0.35),
+    0 3px 0 #8f6430;
 }
 
-code {
-  font-family: ui-monospace, monospace;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
-  background: color-mix(in srgb, currentColor 12%, transparent);
+.tray-lip {
+  background: linear-gradient(#c99a5a, #b98a4b);
+  color: #ffffff;
+  text-shadow: 0 2px 0 rgba(70, 40, 10, 0.45);
 }
 
-footer {
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+/* The cash drawer and its compartments. */
+.till {
+  background: linear-gradient(#3d4a5a, #2c3744);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    0 4px 0 #1c242e;
+}
+
+.till-slot {
+  background: linear-gradient(#55657a, #4a596c);
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 80ms ease-out;
+}
+
+.till-slot:disabled {
+  cursor: default;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12%);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-10px);
+  }
+  40%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift), 110vh) rotate(var(--spin));
+    opacity: 0.9;
+  }
+}
+
+.animate-bob {
+  animation: bob 0.9s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+.animate-pop {
+  animation: pop 0.28s ease-out;
+}
+
+.confetti {
+  animation: confetti-fall 1.4s cubic-bezier(0.3, 0.2, 0.6, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bob,
+  .animate-shake,
+  .animate-pop {
+    animation: none;
+  }
+  .confetti {
+    display: none;
+  }
 }
