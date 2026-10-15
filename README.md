@@ -34,8 +34,8 @@ no runtime API call. Cloudflare Workers builds and deploys it on every push to
 - A round is five amounts; five stars at the top show progress, and a trophy
   ends the round with replay and home buttons.
 - Tapping a coin or note flies it into the tray, where pieces pile up by value
-  and the running total shows on the tray's lip. Tapping a piece in the tray
-  sends it back.
+  so she can count them. In a level the tray never shows its total: counting
+  is the lesson. Tapping a piece in the tray sends it back.
 - The tick is always enabled. Right amount: confetti, a happy face, next
   amount. Wrong amount: the tray shakes, a sad face shows, and everything flies
   back to the till. No lives, no fail state — just try again.

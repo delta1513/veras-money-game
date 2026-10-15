@@ -28,7 +28,7 @@ async function pay(page: Page, cents: number) {
       rest -= value;
     }
   }
-  await expect(page.getByTestId("tray-total")).toHaveAttribute(
+  await expect(page.getByTestId("tray")).toHaveAttribute(
     "data-cents",
     String(cents),
   );
@@ -67,7 +67,6 @@ test("every till item, the tray and the pay button fit on a phone screen", async
     "btn-home",
     "target",
     "tray",
-    "tray-total",
   ];
   for (const id of ids) {
     const box = (await page.getByTestId(id).boundingBox())!;
@@ -112,6 +111,17 @@ test("level 1: paying the right amount advances progress", async ({ page }) => {
   await expect(page.getByTestId("tray")).toHaveAttribute("data-count", "0");
 });
 
+test("a level never shows the tray's total, so Vera counts it herself", async ({
+  page,
+}) => {
+  await start(page, 1);
+  await page.getByTestId("till-500").click();
+  await page.getByTestId("till-200").click();
+  await expect(page.getByTestId("tray")).toHaveAttribute("data-cents", "700");
+  await expect(page.getByTestId("tray-total")).toHaveCount(0);
+  await expect(page.getByTestId("tray")).not.toContainText("$7");
+});
+
 test("a wrong payment empties the tray and keeps the same amount", async ({
   page,
 }) => {
@@ -120,7 +130,7 @@ test("a wrong payment empties the tray and keeps the same amount", async ({
 
   await pay(page, target);
   await page.getByTestId("till-5").click(); // 5c too much
-  await expect(page.getByTestId("tray-total")).toHaveAttribute(
+  await expect(page.getByTestId("tray")).toHaveAttribute(
     "data-cents",
     String(target + 5),
   );
@@ -130,7 +140,7 @@ test("a wrong payment empties the tray and keeps the same amount", async ({
   await expect(page.getByTestId("overlay-success")).toBeHidden();
 
   await expect(page.getByTestId("tray")).toHaveAttribute("data-count", "0");
-  await expect(page.getByTestId("tray-total")).toHaveAttribute(
+  await expect(page.getByTestId("tray")).toHaveAttribute(
     "data-cents",
     "0",
   );
@@ -160,13 +170,13 @@ test("tapping a tray item sends it back to the till", async ({ page }) => {
   await page.getByTestId("till-200").click();
   await page.getByTestId("till-50").click();
   await page.getByTestId("till-50").click();
-  await expect(page.getByTestId("tray-total")).toHaveAttribute(
+  await expect(page.getByTestId("tray")).toHaveAttribute(
     "data-cents",
     "300",
   );
 
   await page.locator('[data-testid="tray-item"][data-cents="200"]').click();
-  await expect(page.getByTestId("tray-total")).toHaveAttribute(
+  await expect(page.getByTestId("tray")).toHaveAttribute(
     "data-cents",
     "100",
   );
@@ -312,7 +322,6 @@ for (const screen of IPAD_SCREENS) {
         "btn-home",
         "target",
         "tray",
-        "tray-total",
       ]);
       await expectBottomLeft(page, "btn-pay");
       const tray = (await page.getByTestId("tray").boundingBox())!;

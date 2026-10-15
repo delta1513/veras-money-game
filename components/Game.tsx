@@ -142,15 +142,8 @@ export default function Game({
             onRemove={tray.remove}
             locked={busy}
             shake={phase === "wrong"}
-            total={
-              <span
-                data-testid="tray-total"
-                data-cents={total}
-                className={`text-4xl font-black tabular-nums roomy:text-6xl ${total === 0 ? "opacity-40" : ""}`}
-              >
-                {format(total)}
-              </span>
-            }
+            // No running total here: counting the money is the lesson. Only
+            // free play adds it up.
             overlay={
               phase === "wrong" ? (
                 <span data-testid="wrong-face" className="animate-pop">

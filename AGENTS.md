@@ -56,7 +56,9 @@ Before you finish, ask this question: "Can Vera use this feature with one hand, 
 
 ## How the game works
 
-The player is a cashier. The screen shows an amount on a receipt. The player taps coins and notes in the till. Each tap sends one piece of money to the tray. The tray shows its total. The player presses the green tick to pay.
+The player is a cashier. The screen shows an amount on a receipt. The player taps coins and notes in the till. Each tap sends one piece of money to the tray. The player counts the money in the tray and presses the green tick to pay.
+
+In a level, the tray does not show its total. Vera must count the money herself, because that is what the game teaches. Do not add a running total, a "close" hint, or a colour that shows the amount is right. Only free play shows a total.
 
 - If the tray total is the same as the amount, the game shows confetti, a happy face, and the amount. Then the next amount comes.
 - If the tray total is different, the tray shakes and a sad face shows. All the money flies back to the till. The amount stays the same. There are no lives and no fail screen.
